@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <title>Psychologists</title>
+</head>
+
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: #e3f2fd;">
+        <div class="container-fluid">
+            <img src="/images/volunteer.png" style="width: 100px; height: 100px;" class="img-thumbnail" alt="...">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 d-flex justify-content-center">
+                    <li class="nav-item pe-3">
+                        <a class="nav-link active" aria-current="page" href="#">Головна сторінка</a>
+                    </li>
+                    <li class="nav-item pe-3">
+                        <a class="nav-link active" href="/volunteers">Індивідуальна допомога</a>
+                    </li>
+
+                </ul>
+                <a href="/account">
+                    <img src="/images/account.png" style="width: 80px; height: 80px;" class="img-fluid" alt="...">
+                </a>
+                <!--            <img src="/images/account.png" style="width: 80px; height: 80px;" class="img-thumbnail" alt="..." href="/account">-->
+                <!--            <form class="d-flex" role="search">-->
+                <!--                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
+                <!--                <button class="btn btn-outline-success" type="submit">Search</button>-->
+                <!--            </form>-->
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="container">
+        <h2>Список волонтерів</h2>
+
+        <!-- Цикл для перебору волонтерів -->
+        <div th:each="volunteer : ${volunteers}">
+            <form method="post" role="form" th:action="@{/submitRequest/{volunteerId}(volunteerId=${volunteer.id})}">
+
+            <div class="row mb-4">
+                <!-- Ліва частина - основні властивості волонтера -->
+                <div class="col-md-6">
+                    <h4 th:text="${volunteer.user.firstName + ' ' + volunteer.user.lastName}"></h4>
+                    <p th:text="${'Напрямок: ' + volunteer.branch.branchName}"></p>
+                    <p th:text="${'Досвід: ' + volunteer.experience.experienceName}"></p>
+                    <p th:text="${'Кваліфікація: ' + volunteer.qualification.qualificationName}"></p>
+                    <!--        <p th:text="${'Запит: ' + volunteer.concern.concernName}"></p>-->
+                </div>
+
+                <!-- Права частина - запити та кнопка "Залишити заявку" -->
+                <!--      <div class="col-md-6">-->
+                <!--        <h5>Запити:</h5>-->
+                <!--        &lt;!&ndash;        <ul>&ndash;&gt;-->
+                <!--        &lt;!&ndash;          &lt;!&ndash; Цикл для перебору запитів волонтера &ndash;&gt;&ndash;&gt;-->
+                <!--        &lt;!&ndash;          <li th:each="request : ${volunteer.concern}" th:text="${concern}"></li>&ndash;&gt;-->
+                <!--        &lt;!&ndash;        </ul>&ndash;&gt;-->
+                <!--        <p th:text="${'Запит: ' + volunteer.concern}"></p>-->
+                <div class="col-md-6">
+                    <p th:text="${'Запит: ' + volunteer.concern.concernName}"></p>
+
+                    <button class="btn btn-primary" id="submitRequest" type="submit" data-toggle="modal" data-target="#myModal">Залишити заявку</button>
+                    <div class="modal" id="myModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <!-- Заголовок модального вікна -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Вашу заявку буде розглянуто найближчим часом</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+
+                                <!-- Тіло модального вікна -->
+                                <div class="modal-body">
+                                    <p>Дякуємо за вашу заявку. Ми розглянемо її найближчим часом.</p>
+                                </div>
+
+                                <!-- Панель кнопок модального вікна -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--                    <a th:href="@{/submitRequest}"-->
+<!--                       <a class="btn btn-primary btn-sm mb-3">Залишити заявку</a>-->
+                </div>
+            </div>
+            </form>
+        </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-iOJ61iWR0MPiNhI37UCrN2JKRAbQ6vp7kHwA8uNZJ3LlAqAaiYgWrXNaQw9ogpC"
+        crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!--<div class="container text-center">-->
+<!--  <div class="row row-cols-2">-->
+<!--    <div class="col">Column</div>-->
+<!--    <div class="col">Column</div>-->
+<!--    <div class="col">Column</div>-->
+<!--    <div class="col">Column</div>-->
+<!--    <div class="col">Column</div>-->
+<!--    <div class="col">Column</div>-->
+<!--  </div>-->
+<!--</div>-->
+
+</body>
+</html>
+
+
+
