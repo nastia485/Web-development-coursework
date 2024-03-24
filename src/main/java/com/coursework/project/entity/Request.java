@@ -29,6 +29,10 @@ public class Request {
     @JoinColumn(name = "status_id", nullable = false)
     private Status status;
 
+
+    @Column(name = "request_from_client")
+    private Integer isRequestFromClient;
+
     @Override
     public String toString() {
         return "Request{" +
@@ -36,14 +40,7 @@ public class Request {
                 ", client=" + client +
                 ", volunteer=" + volunteer +
                 ", status=" + status +
+                ", isRequestFromClient=" + isRequestFromClient +
                 '}';
     }
-
-
-    //    @ManyToOne(optional = false)
-//    @JoinColumn(name = "branch_id", nullable = false)
-//    private Branch branch;
-
-//    @Column(nullable=false)
-//    private String text;
 }

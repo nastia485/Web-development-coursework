@@ -1,6 +1,8 @@
 package com.coursework.project.controller;
 
+import com.coursework.project.entity.Client;
 import com.coursework.project.entity.Volunteer.Volunteer;
+import com.coursework.project.service.ClientService;
 import com.coursework.project.service.VolunteerService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,9 +16,12 @@ import java.util.List;
 @Controller
 public class MainController {
     private VolunteerService volunteerService;
+    private ClientService clientService;
 
-    public MainController(VolunteerService volunteerService) {
+    public MainController(VolunteerService volunteerService,
+                          ClientService clientService) {
         this.volunteerService = volunteerService;
+        this.clientService = clientService;
     }
 
     @GetMapping("/")
@@ -26,21 +31,17 @@ public class MainController {
 
 
     @GetMapping("/volunteers")
-    public String getVolunteers(Model model) {
+    public String getVolunteers(Model model, Authentication authentication) {
         List<Volunteer> theVolunteers = volunteerService.findAll();
-        System.out.println("_______________");
-        System.out.println(theVolunteers);
-        System.out.println("_______________");
 
-        // add to the spring model
         model.addAttribute("volunteers", theVolunteers);
         return "list-volunteers";
     }
+
     @GetMapping("/account")
     public String viewAccountPage(Authentication authentication) {
         System.out.println(authentication);
         if (authentication != null && authentication.isAuthenticated()) {
-            // Отримання ролі користувача
             Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
             System.out.println(authorities);
 
@@ -56,14 +57,5 @@ public class MainController {
         }
     }
 
-//    @GetMapping("/volunteer/requests")
-//    public String getVolunteerRequests(){
-//        return "volunteer/requests";
-//    }
-//
-//    @GetMapping("/client/requests")
-//    public String getClientRequests(){
-//        return "client/requests";
-//    }
 }
 

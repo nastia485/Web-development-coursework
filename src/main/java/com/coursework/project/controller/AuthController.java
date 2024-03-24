@@ -106,10 +106,7 @@ public class AuthController {
         Client client = new Client();
         client.setUser(user);
 
-        //String phoneNumber = "";
-       // model.addAttribute("user", user);
         model.addAttribute("client", client);
-       // model.addAttribute("phoneNumber", phoneNumber);
         return "registration/reg-client";
     }
 
@@ -124,7 +121,6 @@ public class AuthController {
 
     @PostMapping("/register/saveAdmin")
     public String adminRegistration(
-            //@Valid @ModelAttribute("user") User user,
                                     @Valid @ModelAttribute("admin") Admin admin,
                                     BindingResult result,
                                     Model model) {
@@ -136,12 +132,11 @@ public class AuthController {
         userService.saveUser(user);
         admin.setUser(user);
         adminService.saveAdmin(admin);
-        return "redirect:/register?success";
+        return "redirect:/login?success";
     }
 
     @PostMapping("/register/saveVolunteer")
     public String volunteerRegistration(
-//            @Valid @ModelAttribute("user") User user,
             @Valid @ModelAttribute("volunteer") Volunteer volunteer,
             BindingResult result,
             Model model) {
@@ -156,29 +151,24 @@ public class AuthController {
         volunteerService.saveVolunteer(volunteer);
         System.out.println("Volunteer user is: " + userService.findByEmail(user.getEmail()));
 
-        return "redirect:/register?success";
+        return "redirect:/login?success";
     }
 
     @PostMapping("/register/saveClient")
     public String clientRegistration(
-            //@Valid @ModelAttribute("user") User user,
                                      @Valid @ModelAttribute("client") Client client,
-                                     //@ModelAttribute("phoneNumber") String phoneNumber,
                                      BindingResult result,
                                      Model model) {
         User user = client.getUser();
         String check = checkUser(user, result, model);
-        //System.out.println(phoneNumber);
         if (!check.equals("")) return check;
         Role role = roleService.findById(3L);
         user.setRole(role);
         userService.saveUser(user);
         client.setUser(user);
-        //System.out.println("Client user is: " + userService.findByEmail(user.getEmail()));
 
-        //client.setPhoneNumber(phoneNumber);
         clientService.saveClient(client);
-        return "redirect:/register?success";
+        return "redirect:/login?success";
     }
 
     @GetMapping("/users")

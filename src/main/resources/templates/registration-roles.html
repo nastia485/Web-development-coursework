@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Choose role</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <title>Home</title>
 </head>
 <body>
 <header>
     <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: #e3f2fd;">
         <div class="container-fluid">
             <img src="/images/volunteer.png" style="width: 100px; height: 100px;" class="img-thumbnail" alt="...">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -19,7 +24,7 @@
                     <li class="nav-item pe-3">
                         <a class="nav-link active" aria-current="page" href="#">Головна сторінка</a>
                     </li>
-                    <li class="nav-item pe-3">
+                    <li class="nav-item pe-3" >
                         <a class="nav-link active" href="/volunteers">Індивідуальна допомога</a>
                     </li>
 
@@ -32,17 +37,23 @@
         </div>
     </nav>
 </header>
-<div class="form-group mb-3">
-    <a th:href="@{/register/adminRegistrationPage}"
-       class="btn btn-primary btn-sm mb-3">Admin</a>
-    <a th:href="@{/register/volunteerRegistrationPage}"
-       class="btn btn-primary btn-sm mb-3">Volunteer</a>
-    <a th:href="@{/register/clientRegistrationPage}"
-       class="btn btn-primary btn-sm mb-3">Client</a>
+<div class="container mt-4">
+    <h3 class="text-center mb-4">Зареєструватися як</h3>
 
-    <span>Already registered? <a href="/" th:href="@{/login}">Login
-                             here</a></span>
+    <div class="form-group mb-4 d-flex justify-content-center">
+<!--        <a th:href="@{/register/adminRegistrationPage}" class="btn btn-primary btn-sm mx-3">Admin</a>-->
+        <a th:href="@{/register/volunteerRegistrationPage}" class="btn btn-primary btn-sm mx-3">Волонтер</a>
+        <a th:href="@{/register/clientRegistrationPage}" class="btn btn-primary btn-sm mx-3">Клієнт</a>
+    </div>
+
+    <div class="mt-5 text-center">
+        <span class="text-muted">Уже зареєстровані? <a href="/" th:href="@{/login}">Авторизуйтеся тут</a></span>
+    </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>

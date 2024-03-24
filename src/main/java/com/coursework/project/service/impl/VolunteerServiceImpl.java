@@ -1,6 +1,7 @@
 package com.coursework.project.service.impl;
 
 import com.coursework.project.entity.Admin;
+import com.coursework.project.entity.Volunteer.Concern;
 import com.coursework.project.entity.Volunteer.Volunteer;
 import com.coursework.project.repository.UserRepository;
 import com.coursework.project.repository.VolunteerRepository;
@@ -56,6 +57,15 @@ public class VolunteerServiceImpl implements VolunteerService {
             }
         }
         return theVolunteer;
+    }
+
+    @Override
+    public Volunteer findSimilar(Volunteer volunteer) {
+        Concern concern = volunteer.getConcern();
+        Long rejectedVolunteerId = volunteer.getId();
+        List<Volunteer> availableVolunteers = volunteerRepository.findByConcernAndIdIsNot(concern, rejectedVolunteerId);
+        return availableVolunteers.stream().findFirst().orElse(null);
+
     }
 
 

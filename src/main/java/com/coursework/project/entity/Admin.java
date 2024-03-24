@@ -17,7 +17,6 @@ public class Admin {
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
-//    @PrimaryKeyJoinColumn
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 

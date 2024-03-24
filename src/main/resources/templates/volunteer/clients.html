@@ -33,7 +33,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0 d-flex justify-content-center">
                     <li class="nav-item pe-3">
-                        <a class="nav-link active" aria-current="page" href="#">Головна сторінка</a>
+                        <a class="nav-link active" aria-current="page" href="/index">Головна сторінка</a>
                     </li>
                     <li class="nav-item pe-3">
                         <a class="nav-link active" href="/volunteers">Індивідуальна допомога</a>
@@ -49,48 +49,55 @@
 
 <!-- Бічний блок -->
 <div class="container-fluid">
-    <div class="row">
-        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-            <div class="sidebar-sticky">
+    <div class="row h-100">
+        <nav class="col-md-2 d-none d-md-block sidebar">
+            <div>
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active text-center" href="/volunteer/requests">
+                        <a class="nav-link active text-center mt-3" href="/volunteer/requests">
                             Запити
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-center" href="/volunteer/clients">
+                        <a class="nav-link text-center mt-3" href="/volunteer/clients">
                             Клієнти
                         </a>
                     </li>
                 </ul>
             </div>
         </nav>
-    </div>
 
-    <!-- Зміст вашої сторінки тут -->
-    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-        <div class="container">
-            <h3>Запити</h3>
-            <hr>
-            <table class="table table-bordered table-striped">
-                <thead class="table-dark">
-                <tr>
-                    <th>Ім'я</th>
-                    <th>Телефон</th>
-                    <th>Email</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="client : ${clients}">
-                    <td th:text="${client.user.firstName + ' ' + client.user.firstName}"/>
-                    <td th:text="${client.phoneNumber}"/>
-                    <td th:text="${client.user.email}"/>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </main>
+
+        <!-- Зміст вашої сторінки тут -->
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div class="container mt-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <p class="m-0">Ви авторизовані як волонтер</p>
+                    <form method="post" th:action="@{/logout}">
+                        <button class="btn btn-outline-secondary" type="submit">Вийти</button>
+                    </form>
+                </div>
+                <h3>Запити</h3>
+                <hr>
+                <table class="table table-bordered table-striped">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>Ім'я</th>
+                        <th>Телефон</th>
+                        <th>Email</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="client : ${clients}">
+                        <td th:text="${client.user.firstName + ' ' + client.user.firstName}"/>
+                        <td th:text="${client.phoneNumber}"/>
+                        <td th:text="${client.user.email}"/>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
 </div>
 
 

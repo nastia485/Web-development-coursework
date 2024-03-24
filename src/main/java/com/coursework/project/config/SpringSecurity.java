@@ -32,7 +32,7 @@ public class SpringSecurity {
                                 .requestMatchers("/index").permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/volunteer/**").hasRole("VOLUNTEER")
-                                //.requestMatchers("/users").hasRole("ADMIN")
+                                .requestMatchers("/client/**").hasRole("CLIENT")
                                 .requestMatchers("/**").permitAll()
                                 .requestMatchers("/")
 
@@ -41,10 +41,6 @@ public class SpringSecurity {
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
-
-//                                .defaultSuccessUrl("/", true)
-
-                                //.defaultSuccessUrl("/users")
                                 .defaultSuccessUrl("/account")
                                 .permitAll()
 
@@ -52,6 +48,7 @@ public class SpringSecurity {
                         logout -> logout
 
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                                .logoutSuccessUrl("/index")
                                 .permitAll()
                 );
         return http.build();

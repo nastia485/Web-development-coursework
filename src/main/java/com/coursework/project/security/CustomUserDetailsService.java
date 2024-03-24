@@ -1,47 +1,5 @@
 package com.coursework.project.security;
 
-//import com.coursework.project.entity.Role;
-//import com.coursework.project.entity.User;
-//import com.coursework.project.repository.UserRepository;
-//import org.springframework.security.core.GrantedAuthority;
-//import org.springframework.security.core.authority.SimpleGrantedAuthority;
-//import org.springframework.security.core.userdetails.UserDetails;
-//import org.springframework.security.core.userdetails.UserDetailsService;
-//import org.springframework.security.core.userdetails.UsernameNotFoundException;
-//import org.springframework.stereotype.Service;
-//
-//import java.util.Collection;
-//import java.util.stream.Collectors;
-//
-//@Service
-//public class CustomUserDetailsService implements UserDetailsService {
-//
-//    private UserRepository userRepository;
-//
-//    public CustomUserDetailsService(UserRepository userRepository) {
-//        this.userRepository = userRepository;
-//    }
-//
-//    @Override
-//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-//        User user = userRepository.findByEmail(email);
-//
-//        System.out.println(user);
-//        if (user != null) {
-//            return new org.springframework.security.core.userdetails.User(user.getEmail(),
-//                    user.getPassword(),
-//                    (Collection<? extends GrantedAuthority>) mapRolesToAuthorities(user.getRole()));
-//
-//        }else{
-//            throw new UsernameNotFoundException("Invalid username or password.");
-//        }
-//    }
-//
-//    private GrantedAuthority mapRolesToAuthorities(Role role) {
-//        return new SimpleGrantedAuthority(role.getName());
-//    }
-//}
-
 import com.coursework.project.entity.Role;
 import com.coursework.project.entity.User;
 import com.coursework.project.repository.UserRepository;

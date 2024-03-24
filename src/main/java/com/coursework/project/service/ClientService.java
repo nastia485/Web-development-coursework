@@ -7,8 +7,9 @@ public interface ClientService {
     void saveClient(Client client);
 
     Client findClientByUserId(Long userId);
+
     Client findClientByEmail(String email);
 
-
+    //boolean canSubmitRequest(Client client);
 
 }

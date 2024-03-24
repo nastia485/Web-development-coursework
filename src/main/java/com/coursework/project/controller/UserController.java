@@ -29,11 +29,7 @@ public class UserController {
     public String getClientRegistration() {
         return "register";
     }
-//    @GetMapping("roles")
-//    public String chooseRole(){
-//        System.out.println("kuku");
-//        return "registration-roles";
-//    }
+
 
     private RequestService requestService;
     private ClientService clientService;
@@ -57,12 +53,6 @@ public class UserController {
         this.statusService = statusService;
     }
 
-
-//    @PostMapping("/submitRequest/{volunteerId}")
-//    public String submitRequest(@PathVariable Long volunteerId, Principal principal) {
-//        // Отримайте ідентифікатор користувача, який залогінений (principal.getName())
-
-
     @PostMapping("/submitRequest/{volunteerId}")
     public String saveRequest(@PathVariable Long volunteerId, Authentication authentication) {
         String userName = authentication.getName();
@@ -70,6 +60,7 @@ public class UserController {
         User user = userService.findByEmail(userName);
         Client client = clientService.findClientByUserId(user.getId());
         request.setClient(client);
+        request.setIsRequestFromClient(1);
         request.setVolunteer(volunteerService.findById(volunteerId));
         Status status = statusService.findById(1L);
         request.setStatus(status);

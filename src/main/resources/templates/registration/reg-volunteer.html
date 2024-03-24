@@ -21,7 +21,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0 d-flex justify-content-center">
                     <li class="nav-item pe-3">
-                        <a class="nav-link active" aria-current="page" href="#">Головна сторінка</a>
+                        <a class="nav-link active" aria-current="page" href="/index">Головна сторінка</a>
                     </li>
                     <li class="nav-item pe-3">
                         <a class="nav-link active" href="/volunteers">Індивідуальна допомога</a>
@@ -48,13 +48,13 @@
                 </div>
             </div>
             <div class="card-header">
-                <h2 class="text-center">Registration</h2>
+                <h2 class="text-center">Реєстрація волонтера</h2>
             </div>
             <div class="card-body">
                 <form method="post" role="form" th:action="@{/register/saveVolunteer}" th:object="${volunteer}">
 
                     <div class="form-group mb-3">
-                        <label class="form-label">First Name</label>
+                        <label class="form-label">Ім'я</label>
                         <input class="form-control"
                                id="firstName"
                                name="firstName"
@@ -68,7 +68,7 @@
                     </div>
 
                     <div class="form-group mb-3">
-                        <label class="form-label">Last Name</label>
+                        <label class="form-label">Прізвище</label>
                         <input class="form-control"
                                id="lastName"
                                name="lastName"
@@ -94,7 +94,7 @@
                         </p>
                     </div>
                     <div class="form-group mb-3">
-                        <label class="form-label">Password</label>
+                        <label class="form-label">Пароль</label>
                         <input class="form-control"
                                id="password"
                                name="password"
@@ -107,10 +107,8 @@
                         </p>
                     </div>
 
-                    <!--                    <form method="post" th:action="@{/register/saveVolunteer}" th:object="${volunteer}">-->
-
                     <div class="form-group mb-3">
-                        <label class="form-label">Branch</label>
+                        <label class="form-label">Спеціалізація</label>
                         <select class="form-control" id="branch" name="branch.id" th:field="*{branch}">
                             <option th:each="branchOption : ${branchOptions}" th:value="${branchOption.id}"
                                     th:text="${branchOption.branchName}">Select Branch
@@ -118,24 +116,8 @@
                         </select>
                         <p th:errors="*{branch}" class="text-danger" th:if="${#fields.hasErrors('branch')}"></p>
                     </div>
-                    <!--                    <div class="form-group mb-3">&ndash;&gt;-->
-                    <!--                        <label class="form-label">Concerns (Select up to 3)</label>-->
-
-                    <!--                        <div th:each="concern : ${concernOptions}" class="form-check">-->
-                    <!--                            <input class="form-check-input"-->
-                    <!--                                   type="checkbox"-->
-                    <!--                                   th:id="${'concern' + concern.id}"-->
-                    <!--                                   th:name="concerns"-->
-                    <!--                                   th:value="${concern.id}">-->
-                    <!--&lt;!&ndash;                                   th:checked="${volunteer.concerns != null and volunteer.concerns.contains(concern.id)}">&ndash;&gt;-->
-                    <!--                            <label th:for="${'concern' + concern.concernName}" class="form-check-label"-->
-                    <!--                                   th:text="${concern.concernName}"></label>-->
-                    <!--                        </div>-->
-
-                    <!--                        <p th:errors="*{concerns}" class="text-danger" th:if="${#fields.hasErrors('concerns')}"></p>-->
-                    <!--                    </div>-->
                     <div class="form-group mb-3">
-                        <label class="form-label">Concern</label>
+                        <label class="form-label">Запит</label>
                         <select class="form-control" id="concern" name="concern.id" th:field="*{concern}">
                             <option th:each="concernOption : ${concernOptions}" th:value="${concernOption.id}"
                                     th:text="${concernOption.concernName}">Select Concern
@@ -145,7 +127,7 @@
                     </div>
 
                     <div class="form-group mb-3">
-                        <label class="form-label">Branch</label>
+                        <label class="form-label">Кваліфікація</label>
                         <select class="form-control" id="qualification" name="qualification.id"
                                 th:field="*{qualification}">
                             <option th:each="qualificationOption : ${qualificationOptions}"
@@ -157,7 +139,7 @@
                            th:if="${#fields.hasErrors('qualification')}"></p>
                     </div>
                     <div class="form-group mb-3">
-                        <label class="form-label">Experience</label>
+                        <label class="form-label">Досвід</label>
                         <select class="form-control" id="experience" name="experience.id" th:field="*{experience}">
                             <option th:each="experienceOption : ${experienceOptions}" th:value="${experienceOption.id}"
                                     th:text="${experienceOption.experienceName}">Select Experience
@@ -166,49 +148,9 @@
                         <p th:errors="*{experience}" class="text-danger" th:if="${#fields.hasErrors('experience')}"></p>
                     </div>
 
-                    <!--                        <div class="form-group mb-3">-->
-                    <!--                            <label class="form-label">Concerns (Select up to 3)</label>-->
-
-                    <!--                            <div th:each="concern : ${concernOptions}" class="form-check">-->
-                    <!--                                <input class="form-check-input"-->
-                    <!--                                       type="checkbox"-->
-                    <!--                                       th:id="${'concern' + concern.id}"-->
-                    <!--                                       th:name="concerns"-->
-                    <!--                                       th:value="${concern.id}"-->
-                    <!--                                       th:checked="${volunteer.concerns != null and volunteer.concerns.contains(concern.id)}">-->
-                    <!--                                <label th:for="${'concern' + concern.concernName}" class="form-check-label" th:text="${concern.concernName}"></label>-->
-                    <!--                            </div>-->
-
-                    <!--                            <p th:errors="*{concerns}" class="text-danger" th:if="${#fields.hasErrors('concerns')}"></p>-->
-                    <!--                        </div>-->
-
-
-                    <!--                        <div class="form-group mb-3">-->
-                    <!--                            <label class="form-label">Concerns (Select up to 3)</label>-->
-
-                    <!--                            <div class="form-check">-->
-                    <!--                                <input class="form-check-input" type="checkbox" id="concern1" name="concerns" value="Option1" th:checked="${volunteer.concerns != null and volunteer.concerns.contains('Option1')}">-->
-                    <!--                                <label class="form-check-label" for="concern1">Option 1</label>-->
-                    <!--                            </div>-->
-
-                    <!--                            <div class="form-check">-->
-                    <!--                                <input class="form-check-input" type="checkbox" id="concern2" name="concerns" value="Option2" th:checked="${volunteer.concerns != null and volunteer.concerns.contains('Option2')}">-->
-                    <!--                                <label class="form-check-label" for="concern2">Option 2</label>-->
-                    <!--                            </div>-->
-
-                    <!--                            &lt;!&ndash; Додайте інші чекбокси для інших опцій &ndash;&gt;-->
-
-                    <!--                            <p th:errors="*{concerns}" class="text-danger" th:if="${#fields.hasErrors('concerns')}"></p>-->
-                    <!--                        </div>-->
-
-
-                    <!--                        <button type="submit">Save Volunteer</button>-->
-                    <!--                    </form>-->
-
                     <div class="form-group mb-3">
-                        <button class="btn btn-primary" type="submit">Register</button>
-                        <span>Already registered? <a href="/" th:href="@{/login}">Login
-                             here</a></span>
+                        <button class="btn btn-primary" type="submit">Зареєструватися</button>
+                        <span>Вже зареєстровані? <a href="/" th:href="@{/login}">Увійдіть тут</a></span>
                     </div>
                 </form>
             </div>

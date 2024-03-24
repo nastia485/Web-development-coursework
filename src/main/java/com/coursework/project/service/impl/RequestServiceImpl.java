@@ -6,6 +6,7 @@ import com.coursework.project.entity.Status;
 import com.coursework.project.entity.Volunteer.Volunteer;
 import com.coursework.project.repository.RequestRepository;
 import com.coursework.project.repository.StatusRepository;
+import com.coursework.project.repository.VolunteerRepository;
 import com.coursework.project.service.RequestService;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ import java.util.List;
 public class RequestServiceImpl implements RequestService {
     private RequestRepository requestRepository;
     private StatusRepository statusRepository;
+
 
     public RequestServiceImpl(RequestRepository requestRepository,
                               StatusRepository statusRepository) {
@@ -34,6 +36,17 @@ public class RequestServiceImpl implements RequestService {
         List<Request> requests = requestRepository.findAll();
         for (Request request : requests) {
             if (request.getClient().equals(client)) {
+                clientRequests.add(request);
+            }
+        }
+        return clientRequests;
+    }
+    @Override
+    public List<Request> findSubmittedByClient(Client client) {
+        List<Request> clientRequests = new ArrayList<>();
+        List<Request> requests = requestRepository.findAll();
+        for (Request request : requests) {
+            if (request.getClient().equals(client) && request.getIsRequestFromClient()==1) {
                 clientRequests.add(request);
             }
         }
@@ -63,6 +76,19 @@ public class RequestServiceImpl implements RequestService {
             }
         }
         return clients;
+    }
+
+
+    @Override
+    public List<Client> findActiveClientsByVolunteer(Volunteer volunteer) {
+        List<Request> requests = findByVolunteer(volunteer);
+        List<Client> activeClients = new ArrayList<>();
+        for (Request request : requests) {
+            if (request.getStatus().getId().equals(4L)) {
+                activeClients.add(request.getClient());
+            }
+        }
+        return activeClients;
     }
 
     @Override

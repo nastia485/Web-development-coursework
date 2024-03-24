@@ -18,16 +18,20 @@
         .sidebar {
             border-right: 1px solid #ddd;
         }
+
         .small-select {
-            font-size: 12px; /* Змініть розмір тексту за потребою */
-            padding: 3px 6px; /* Змініть padding за потребою */
+            font-size: 12px;
+            padding: 3px 6px;
         }
 
         /* Для кнопки */
         .small-button {
-            font-size: 12px; /* Змініть розмір тексту за потребою */
-            padding: 3px 6px; /* Змініть padding за потребою */
-            margin-top: 5px; /* Додайте margin за потребою для відокремлення від інших елементів */
+            font-size: 12px;
+            padding: 3px 6px;
+            margin-top: 5px;
+        }
+        table {
+            text-align: center; /* Вирівнювання тексту по центру */
         }
     </style>
 </head>
@@ -36,121 +40,107 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: #e3f2fd;">
         <div class="container-fluid">
             <img src="/images/volunteer.png" style="width: 100px; height: 100px;" class="img-thumbnail" alt="...">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0 d-flex justify-content-center">
                     <li class="nav-item pe-3">
-                        <a class="nav-link active" aria-current="page" href="#">Головна сторінка</a>
+                        <a class="nav-link active" aria-current="page" href="/index">Головна сторінка</a>
                     </li>
-                    <li class="nav-item pe-3">
+                    <li class="nav-item pe-3" >
                         <a class="nav-link active" href="/volunteers">Індивідуальна допомога</a>
                     </li>
+
                 </ul>
                 <a href="/account">
                     <img src="/images/account.png" style="width: 80px; height: 80px;" class="img-fluid" alt="...">
                 </a>
+
             </div>
         </div>
     </nav>
 </header>
 
-<!-- Бічний блок -->
-<div class="container-fluid">
-    <div class="row">
-        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-            <div class="sidebar-sticky">
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <nav class="col-md-2 d-none d-md-block sidebar">
+            <div >
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active text-center" href="/volunteer/requests">
+                        <a class="nav-link active text-center mt-3" href="/volunteer/requests">
                             Запити
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-center" href="/volunteer/clients">
+                        <a class="nav-link text-center mt-3" href="/volunteer/clients">
                             Клієнти
                         </a>
                     </li>
                 </ul>
             </div>
         </nav>
+
+        <!-- Зміст вашої сторінки тут -->
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div class="container mt-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <p class="m-0">Ви авторизовані як волонтер</p>
+                    <form method="post" th:action="@{/logout}">
+                        <button class="btn btn-outline-secondary" type="submit">Вийти</button>
+                    </form>
+                </div>
+
+                <h3>Запити</h3>
+                <hr>
+
+                <table class="table table-bordered table-striped">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>Ім'я</th>
+                        <th>Телефон</th>
+                        <th>Email</th>
+                        <th>Статус</th>
+                        <th>Зміна статусу</th>
+
+
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="request : ${requests}">
+                        <td th:text="${request.client.user.firstName + ' ' + request.client.user.firstName}"/>
+                        <td th:text="${request.client.phoneNumber}"/>
+                        <td th:text="${request.client.user.email}"/>
+                        <td >
+
+                            <div class="mb-2">
+                                <p class="m-0"><span th:text="${request.status.statusName}"></span></p>
+                            </div>
+                        </td>
+                        <td>
+                            <form method="post" role="form" th:action="@{/volunteer/saveStatus(requestId=${request.id})}">
+                                <select class="form-control mb-2" id="status" name="statusId" th:field="*{currStatus.id}">
+                                    <option th:each="status : ${statuses}" th:value="${status.id}"
+                                            th:text="${status.statusName}"
+                                            th:selected="${status.isSelected(request.status)}">Select status
+                                    </option>
+                                </select>
+
+                                <button class="btn btn-primary" type="submit">Оновити</button>
+                            </form>
+                        </td>
+
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
     </div>
-
-    <!-- Зміст вашої сторінки тут -->
-    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-        <div class="container">
-
-            <h3>Запити</h3>
-            <hr>
-
-
-            <table class="table table-bordered table-striped">
-                <thead class="table-dark">
-                <tr>
-                    <th>Ім'я</th>
-                    <th>Телефон</th>
-                    <th>Email</th>
-                    <th>Статус</th>
-
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr th:each="request : ${requests}">
-                    <td th:text="${request.client.user.firstName + ' ' + request.client.user.firstName}"/>
-                    <td th:text="${request.client.phoneNumber}"/>
-                    <td th:text="${request.client.user.email}"/>
-                    <!--                    <td th:text="${request.status.statusName}"/>-->
-                    <td>
-<!--                        <form method="post" role="form" th:action="@{/volunteer/saveStatus(requestId=${request.id})}" th:object="${statuses}">-->
-<!--                            <select class="form-control" id="status" name="status.id" th:field="*{currStatus.statusName}">-->
-<!--                                <option th:each="status : ${statuses}" th:value="${status.id}"-->
-<!--                                        th:text="${status.statusName}">Select status-->
-<!--                                </option>-->
-<!--                            </select>-->
-<!--                            <button class="btn btn-primary" type="submit">Save</button>-->
-<!--                        </form>-->
-<!--                        <form method="post" role="form" th:action="@{/volunteer/saveStatus(requestId=${request.id})}">-->
-<!--                            <select class="form-control" id="status" name="statusId" th:field="*{currStatus}">-->
-<!--                                <option th:each="status : ${statuses}" th:value="${status.id}" th:selected="${status.id eq statuses[0].id}"-->
-<!--                                        th:text="${status.statusName}">Select status-->
-<!--                                </option>-->
-<!--                            </select>-->
-<!--                            <button class="btn btn-primary" type="submit">Save</button>-->
-<!--                        </form>-->
-
-
-
-                        <div>
-                            <p>Request Status ID: <span th:text="${request.status?.id}"></span></p>
-                        </div>
-                        <form method="post" role="form" th:action="@{/volunteer/saveStatus(requestId=${request.id})}">
-                            <select class="form-control" id="status" name="statusId" th:field="*{currStatus.id}">
-                                <option th:each="status : ${statuses}" th:value="${status.id}"
-                                        th:text="${status.statusName}" th:selected="${status.isSelected(request.status)}">Select status
-                                </option>
-                            </select>
-
-                            <button class="btn btn-primary" type="submit">Save</button>
-                        </form>
-<!--                    -->
-
-
-
-
-
-
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
-        </div>
-    </main>
 </div>
+
+
 
 
 <!-- Додайте посилання на скрипти Bootstrap, якщо необхідно -->

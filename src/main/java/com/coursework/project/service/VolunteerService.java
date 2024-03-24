@@ -15,4 +15,8 @@ public interface VolunteerService {
 
     Volunteer findByEmail(String email);
 
+    Volunteer findSimilar(Volunteer volunteer);
+
+
+
 }

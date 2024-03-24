@@ -26,7 +26,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mx-auto mb-2 mb-lg-0 d-flex justify-content-center">
           <li class="nav-item pe-3">
-            <a class="nav-link active" aria-current="page" href="#">Головна сторінка</a>
+            <a class="nav-link active" aria-current="page" href="/index">Головна сторінка</a>
           </li>
           <li class="nav-item pe-3">
             <a class="nav-link active" href="/volunteers">Індивідуальна допомога</a>
@@ -43,10 +43,8 @@
 </header>
 
 <div class = "container">
-  <h3>Employee Directory</h3>
+  <h3>Редагування користувача</h3>
   <hr>
-
-  <p class="h4 mb-4">Edit User</p>
 
   <form action="#" th:action="@{/admin/save}"
         th:object="${user}" method="POST">
@@ -64,12 +62,12 @@
            class="form-control mb-4 w-25" placeholder="Password">
     <input type="text" th:field="*{role.name}"
            class="form-control mb-4 w-25" placeholder="Role">
-    <button type="submit" class="btn btn-info col-2">Save</button>
+    <button type="submit" class="btn btn-info col-2">Зберегти</button>
 
   </form>
 
   <hr>
-  <a th:href="@{/admin/users}">Back to Users List</a>
+  <a th:href="@{/admin/users}">Назад до користувачів</a>
 </div>
 </body>
 </html>

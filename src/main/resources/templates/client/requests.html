@@ -18,6 +18,7 @@
         .sidebar {
             border-right: 1px solid #ddd;
         }
+
         .small-select {
             font-size: 12px; /* Змініть розмір тексту за потребою */
             padding: 3px 6px; /* Змініть padding за потребою */
@@ -44,7 +45,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0 d-flex justify-content-center">
                     <li class="nav-item pe-3">
-                        <a class="nav-link active" aria-current="page" href="#">Головна сторінка</a>
+                        <a class="nav-link active" aria-current="page" href="/index">Головна сторінка</a>
                     </li>
                     <li class="nav-item pe-3">
                         <a class="nav-link active" href="/volunteers">Індивідуальна допомога</a>
@@ -58,12 +59,15 @@
     </nav>
 </header>
 
-<!-- Бічний блок -->
 <div class="container-fluid">
-    <!-- Зміст вашої сторінки тут -->
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-        <div class="container">
-
+        <div class="container mt-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <p class="m-0">Ви авторизовані як клієнт</p>
+                <form method="post" th:action="@{/logout}">
+                    <button class="btn btn-outline-secondary" type="submit">Вийти</button>
+                </form>
+            </div>
             <h3>Мої запити</h3>
             <hr>
 
@@ -79,12 +83,63 @@
 
                 <tbody>
                 <tr th:each="request : ${requests}">
-                    <td th:text="${request.volunteer.user.firstName + ' ' + request.volunteer.user.firstName}"/>
-                    <td th:text="${request.status.statusName}"/>
-
+                    <div th:if="${request.isRequestFromClient == 1}">
+                        <td th:text="${request.volunteer.user.firstName + ' ' + request.volunteer.user.firstName}"/>
+                        <td th:text="${request.status.statusName}"/>
+                    </div>
                 </tr>
                 </tbody>
             </table>
+
+            <div th:each="request : ${requests}">
+                <div th:if="${request.status.id == 2 and hasPsychologist == 0}">
+                    <p>На жаль, вашу заявку до <span
+                            th:text="${request.volunteer.user.firstName + ' ' + request.volunteer.user.lastName}"></span>
+                        було відхилено. Проаналізувавши Ваші вподобання, ми працюємо над пошуком іншого спеціаліста.</p>
+                </div>
+                <div th:if="${request.status.id == 3 and request.isRequestFromClient == 0}">
+                    <!-- Виведення контенту для статусу "прийнято" -->
+                    <p>Система знайшла Вам психолога <span
+                            th:text="${request.volunteer.user.firstName + ' ' + request.volunteer.user.lastName}"></span>
+                    <div class="mb-3">
+                        <p><strong>Інформація про спеціаліста</strong></p>
+                        <p><strong>Спеціалізація:</strong> <span
+                                th:text="${request.volunteer.concern.concernName}"></span></p>
+                        <p><strong>Галузь:</strong> <span th:text="${request.volunteer.branch.branchName}"></span></p>
+                        <p><strong>Кваліфікація:</strong> <span
+                                th:text="${request.volunteer.qualification.qualificationName}"></span></p>
+                        <p><strong>Досвід:</strong> <span
+                                th:text="${request.volunteer.experience.experienceName}"></span></p>
+                    </div>
+                    Бажаєте почати роботу із цим спеціалістом?</p>
+                    <form method="post" th:action="@{/client/startCooperation}" class="d-inline">
+                        <input type="hidden" name="requestId" th:value="${request.id}"/>
+                        <button type="submit" class="btn btn-primary">Почати співпрацю</button>
+                    </form>
+
+                    <form method="post" th:action="@{/client/rejectCooperation}" class="d-inline ml-2">
+                        <input type="hidden" name="requestId" th:value="${request.id}"/>
+                        <button type="submit" class="btn btn-danger">Відмовитися</button>
+                    </form>
+                </div>
+                <div th:if="${request.status.id == 3 and request.isRequestFromClient == 1}">
+                    <!-- Виведення контенту для статусу "прийнято" -->
+                    <p>Психолог <span
+                            th:text="${request.volunteer.user.firstName + ' ' + request.volunteer.user.lastName}"></span>
+                        прийняв Вашу заявку! Бажаєте почати роботу із цим спеціалістом?</p>
+                    <form method="post" th:action="@{/client/startCooperation}" class="d-inline">
+                        <input type="hidden" name="requestId" th:value="${request.id}"/>
+                        <button type="submit" class="btn btn-primary">Почати співпрацю</button>
+                    </form>
+
+                    <form method="post" th:action="@{/client/rejectCooperation}" class="d-inline ml-2">
+                        <input type="hidden" name="requestId" th:value="${request.id}"/>
+                        <button type="submit" class="btn btn-danger">Відмовитися</button>
+                    </form>
+                </div>
+
+            </div>
+
 
         </div>
     </main>

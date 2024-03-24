@@ -1,6 +1,5 @@
 package com.coursework.project.entity;
 
-import com.coursework.project.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,7 +16,6 @@ public class Client {
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
-//    @PrimaryKeyJoinColumn
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 

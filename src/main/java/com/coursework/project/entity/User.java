@@ -33,13 +33,6 @@ public class User
     @Column(nullable=false)
     private String password;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinTable(
-//            name="users_roles",
-//            joinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")},
-//            inverseJoinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ID")})
-//    private Role role = new Role();
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
